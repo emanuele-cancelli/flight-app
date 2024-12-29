@@ -64,10 +64,16 @@
 			"name": "searchFlights",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJFbWFudWVsZTMiLCJleHAiOjE3MzU1MDIyMzMsImlhdCI6MTczNTQ4NDIzM30.Z9ltPPh5W4b1BILxQVceZ5qpu5cfGubF-dnIo-l18mHzKSX81upm7UTW4bECaK0JA7PP69_Zed2_UYosNhnuKg",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"company\": null,\r\n\t\"flightType\": null,\r\n\t\"travelType\": null,\r\n\t\"departureLocation\": null,\r\n\t\"arrivalLocation\": null,\r\n\t\"fareMin\": null,\r\n\t\"fareMax\": null,\r\n\t\"flightDurationMin\": null,\r\n\t\"flightDurationMax\": null,\r\n\t\"aircraftType\": null,\r\n\t\"departureDateMin\": null,\r\n\t\"arrivalDateMin\": null,\r\n\t\"backDateMin\": null,\r\n\t\"departureTimeMin\": null,\r\n\t\"arrivalTimeMin\": null,\r\n\t\"backTimeMin\": null,\r\n\t\"departureDateMax\": null,\r\n\t\"arrivalDateMax\": null,\r\n\t\"backDateMax\": null,\r\n\t\"departureTimeMax\": \"08:00:00\",\r\n\t\"arrivalTimeMax\": null,\r\n\t\"backTimeMax\": null,\r\n\t\"connectionDurationMin\": null,\r\n\t\"connectionDurationMax\": null\r\n}",
+					"raw": "{\r\n\t\"company\": \"AIRFRANCE\",\r\n\t\"flightType\": null,\r\n\t\"travelType\": null,\r\n\t\"departureLocation\": null,\r\n\t\"arrivalLocation\": null,\r\n\t\"fareMin\": null,\r\n\t\"fareMax\": null,\r\n\t\"flightDurationMin\": null,\r\n\t\"flightDurationMax\": null,\r\n\t\"aircraftType\": null,\r\n\t\"departureDateMin\": null,\r\n\t\"arrivalDateMin\": null,\r\n\t\"backDateMin\": null,\r\n\t\"departureTimeMin\": null,\r\n\t\"arrivalTimeMin\": null,\r\n\t\"backTimeMin\": null,\r\n\t\"departureDateMax\": null,\r\n\t\"arrivalDateMax\": null,\r\n\t\"backDateMax\": null,\r\n\t\"departureTimeMax\": null,\r\n\t\"arrivalTimeMax\": null,\r\n\t\"backTimeMax\": null,\r\n\t\"connectionDurationMin\": null,\r\n\t\"connectionDurationMax\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -187,7 +193,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"Emanuele2\",\r\n    \"email\": \"emanuele.cancelli2@gmail.com\",\r\n    \"password\": \"admin2\",\r\n    \"confpassword\": \"admin2\"\r\n}",
+					"raw": "{\r\n    \"username\": \"Emanuele3\",\r\n    \"email\": \"emanuele.cancelli3@gmail.com\",\r\n    \"password\": \"Admin3!\",\r\n    \"confpassword\": \"Admin3!\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -207,6 +213,38 @@
 						"v1.0",
 						"flights",
 						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authenticate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Emanuele3\",\r\n    \"password\": \"Admin3!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{context}}/api/v1.0/flights/authenticate",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{context}}",
+						"api",
+						"v1.0",
+						"flights",
+						"authenticate"
 					]
 				}
 			},

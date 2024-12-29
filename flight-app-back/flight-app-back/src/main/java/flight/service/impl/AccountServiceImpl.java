@@ -3,7 +3,10 @@
  */
 package flight.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,7 +42,22 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-		return null;
+		boolean enabled = true;
+		boolean accountNonExpired = true;
+		boolean credentialsNonExpired = true;
+		boolean accountNonLocked = true;
+		Account account = accountRepository.findByUsername(username);
+		if(account == null) {
+			throw new UsernameNotFoundException("Account not found for username: " + username);
+		}
+		return new User(
+			username, 
+			account.getPassword(), 
+			enabled, 
+			accountNonExpired, 
+			credentialsNonExpired, 
+			accountNonLocked, 
+			new ArrayList<>()
+		);
 	}
 }

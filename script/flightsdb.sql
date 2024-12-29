@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2024 at 02:06 PM
+-- Generation Time: Dec 29, 2024 at 04:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -42,7 +42,8 @@ CREATE TABLE `account` (
 
 INSERT INTO `account` (`id_account`, `confpassword`, `email`, `enabled`, `password`, `username`) VALUES
 (1, 'admin', 'emanuele.cancelli1@gmail.com', b'0', 'admin', 'Emanuele'),
-(2, '$2a$10$oMcZjhdl/YL3MCDKqKpcfOEBsU1Uxddd7213v1V4E0RCEydgGlGhS', 'emanuele.cancelli2@gmail.com', b'0', '$2a$10$V2T1A2MiGFe8ol80MrYX2e/z6VSUxmm6Mgv1G4l6HIpiOoPWtRvCG', 'Emanuele2');
+(2, '$2a$10$oMcZjhdl/YL3MCDKqKpcfOEBsU1Uxddd7213v1V4E0RCEydgGlGhS', 'emanuele.cancelli2@gmail.com', b'0', '$2a$10$V2T1A2MiGFe8ol80MrYX2e/z6VSUxmm6Mgv1G4l6HIpiOoPWtRvCG', 'Emanuele2'),
+(3, '$2a$10$ApMpjddV9QWWViOgtXbxtOGX88kLmEdVLLO7Sa.cUOFe0MTaiAz8i', 'emanuele.cancelli3@gmail.com', b'0', '$2a$10$gd2UAjQlo3.vwZ2h1j8N5Oz5DaKMw3TeUZmw8B992MBoaas1n/s.K', 'Emanuele3');
 
 -- --------------------------------------------------------
 
@@ -231,7 +232,7 @@ ALTER TABLE `inflight_infos`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `id_account` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_account` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `flight`

@@ -3,14 +3,31 @@
  */
 package flight.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import flight.validation.Password;
+import flight.validation.PasswordMatches;
+
 /**
  * @author Emanuele Cancelli
  *
  */
+@PasswordMatches // custom validation for confpassword = password
 public class AccountDto {
+	
+	@NotBlank(message = "Username is mandatory")
 	private String username;
+	
+	@NotBlank(message = "Password is mandatory")
+	@Password // custom validation
 	private String password;
+	
+	@NotBlank
 	private String confpassword;
+	
+	@NotBlank(message = "Email is mandatory")
+	@Email
 	private String email;
 	/**
 	 * @return the username
