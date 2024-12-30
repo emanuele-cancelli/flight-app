@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2024 at 04:04 PM
+-- Generation Time: Dec 30, 2024 at 04:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -44,6 +44,51 @@ INSERT INTO `account` (`id_account`, `confpassword`, `email`, `enabled`, `passwo
 (1, 'admin', 'emanuele.cancelli1@gmail.com', b'0', 'admin', 'Emanuele'),
 (2, '$2a$10$oMcZjhdl/YL3MCDKqKpcfOEBsU1Uxddd7213v1V4E0RCEydgGlGhS', 'emanuele.cancelli2@gmail.com', b'0', '$2a$10$V2T1A2MiGFe8ol80MrYX2e/z6VSUxmm6Mgv1G4l6HIpiOoPWtRvCG', 'Emanuele2'),
 (3, '$2a$10$ApMpjddV9QWWViOgtXbxtOGX88kLmEdVLLO7Sa.cUOFe0MTaiAz8i', 'emanuele.cancelli3@gmail.com', b'0', '$2a$10$gd2UAjQlo3.vwZ2h1j8N5Oz5DaKMw3TeUZmw8B992MBoaas1n/s.K', 'Emanuele3');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bookmark`
+--
+
+CREATE TABLE `bookmark` (
+  `id_bookmark` bigint(20) NOT NULL,
+  `adding_date` date DEFAULT NULL,
+  `aircraft_type` varchar(255) DEFAULT NULL,
+  `arrival_date_max` date DEFAULT NULL,
+  `arrival_date_min` date DEFAULT NULL,
+  `arrival_location` varchar(255) DEFAULT NULL,
+  `arrival_time_max` time DEFAULT NULL,
+  `arrival_time_min` time DEFAULT NULL,
+  `back_date_max` date DEFAULT NULL,
+  `back_date_min` date DEFAULT NULL,
+  `back_time_max` time DEFAULT NULL,
+  `back_time_min` time DEFAULT NULL,
+  `company` int(11) DEFAULT NULL,
+  `connection_duration_max` time DEFAULT NULL,
+  `connection_duration_min` time DEFAULT NULL,
+  `departure_date_max` date DEFAULT NULL,
+  `departure_date_min` date DEFAULT NULL,
+  `departure_location` varchar(255) DEFAULT NULL,
+  `departure_time_max` time DEFAULT NULL,
+  `departure_time_min` time DEFAULT NULL,
+  `fare_max` double DEFAULT NULL,
+  `fare_min` double DEFAULT NULL,
+  `flight_duration_max` time DEFAULT NULL,
+  `flight_duration_min` time DEFAULT NULL,
+  `flight_type` int(11) DEFAULT NULL,
+  `travel_type` int(11) DEFAULT NULL,
+  `nb_flights` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `account_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bookmark`
+--
+
+INSERT INTO `bookmark` (`id_bookmark`, `adding_date`, `aircraft_type`, `arrival_date_max`, `arrival_date_min`, `arrival_location`, `arrival_time_max`, `arrival_time_min`, `back_date_max`, `back_date_min`, `back_time_max`, `back_time_min`, `company`, `connection_duration_max`, `connection_duration_min`, `departure_date_max`, `departure_date_min`, `departure_location`, `departure_time_max`, `departure_time_min`, `fare_max`, `fare_min`, `flight_duration_max`, `flight_duration_min`, `flight_type`, `travel_type`, `nb_flights`, `title`, `account_id`) VALUES
+(2, '2024-12-30', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 'AIRARABIA', 3);
 
 -- --------------------------------------------------------
 
@@ -200,6 +245,13 @@ ALTER TABLE `account`
   ADD PRIMARY KEY (`id_account`);
 
 --
+-- Indexes for table `bookmark`
+--
+ALTER TABLE `bookmark`
+  ADD PRIMARY KEY (`id_bookmark`),
+  ADD KEY `FKdld3dxpefeqpr9rxyef5idjg4` (`account_id`);
+
+--
 -- Indexes for table `cabin_details`
 --
 ALTER TABLE `cabin_details`
@@ -235,6 +287,12 @@ ALTER TABLE `account`
   MODIFY `id_account` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `bookmark`
+--
+ALTER TABLE `bookmark`
+  MODIFY `id_bookmark` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `flight`
 --
 ALTER TABLE `flight`
@@ -243,6 +301,12 @@ ALTER TABLE `flight`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `bookmark`
+--
+ALTER TABLE `bookmark`
+  ADD CONSTRAINT `FKdld3dxpefeqpr9rxyef5idjg4` FOREIGN KEY (`account_id`) REFERENCES `account` (`id_account`);
 
 --
 -- Constraints for table `cabin_details`

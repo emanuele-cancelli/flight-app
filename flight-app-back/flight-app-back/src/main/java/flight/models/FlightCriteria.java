@@ -6,6 +6,8 @@ package flight.models;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javax.persistence.Embeddable;
+
 import flight.enumerations.CompanyName;
 import flight.enumerations.FlightType;
 import flight.enumerations.TravelType;
@@ -14,6 +16,7 @@ import flight.enumerations.TravelType;
  * @author Emanuele Cancelli
  *
  */
+@Embeddable
 public class FlightCriteria {
 
 	private CompanyName company;

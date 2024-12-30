@@ -102,7 +102,13 @@
 			"name": "getFlight",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJFbWFudWVsZTMiLCJleHAiOjE3MzU1ODQzMDQsImlhdCI6MTczNTU2NjMwNH0.R1Tqmuvi7WPYCM-LGt3A0Fn3-n2u7AEy57cRXct7O-KIcV2zY4wE_qVhZ00VcauTfFUmnMdAP1z5AsBXTzMLMw",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "{{protocol}}://{{host}}:{{port}}/{{context}}/api/v1.0/flights/getFlight/3",
 					"protocol": "{{protocol}}",
@@ -245,6 +251,115 @@
 						"v1.0",
 						"flights",
 						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addBookmark",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJFbWFudWVsZTMiLCJleHAiOjE3MzU1ODE5NzUsImlhdCI6MTczNTU2Mzk3NX0.SmKESJedzME8-MYQFHIULgTmdfoeY8t2cqeiIGICvQd-4EtrX55x7AWEkJ_WH3j6W2xVJs2zUaFv6bHl4XTfJA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"AIRFRANCE\",\r\n    \"nbFlights\": 20,\r\n    \"flightCriteria\":\r\n    {\r\n        \"company\": \"AIRFRANCE\",\r\n        \"flightType\": null,\r\n        \"travelType\": null,\r\n        \"departureLocation\": null,\r\n        \"arrivalLocation\": null,\r\n        \"fareMin\": null,\r\n        \"fareMax\": null,\r\n        \"flightDurationMin\": null,\r\n        \"flightDurationMax\": null,\r\n        \"aircraftType\": null,\r\n        \"departureDateMin\": null,\r\n        \"arrivalDateMin\": null,\r\n        \"backDateMin\": null,\r\n        \"departureTimeMin\": null,\r\n        \"arrivalTimeMin\": null,\r\n        \"backTimeMin\": null,\r\n        \"departureDateMax\": null,\r\n        \"arrivalDateMax\": null,\r\n        \"backDateMax\": null,\r\n        \"departureTimeMax\": null,\r\n        \"arrivalTimeMax\": null,\r\n        \"backTimeMax\": null,\r\n        \"connectionDurationMin\": null,\r\n        \"connectionDurationMax\": null\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{context}}/api/v1.0/flights/addBookmark",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{context}}",
+						"api",
+						"v1.0",
+						"flights",
+						"addBookmark"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bookmarks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJFbWFudWVsZTMiLCJleHAiOjE3MzU1ODQzMDQsImlhdCI6MTczNTU2NjMwNH0.R1Tqmuvi7WPYCM-LGt3A0Fn3-n2u7AEy57cRXct7O-KIcV2zY4wE_qVhZ00VcauTfFUmnMdAP1z5AsBXTzMLMw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{context}}/api/v1.0/flights/bookmarks",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{context}}",
+						"api",
+						"v1.0",
+						"flights",
+						"bookmarks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteBookmark",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJFbWFudWVsZTMiLCJleHAiOjE3MzU1ODQzMDQsImlhdCI6MTczNTU2NjMwNH0.R1Tqmuvi7WPYCM-LGt3A0Fn3-n2u7AEy57cRXct7O-KIcV2zY4wE_qVhZ00VcauTfFUmnMdAP1z5AsBXTzMLMw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{context}}/api/v1.0/flights/deleteBookmark/1",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{context}}",
+						"api",
+						"v1.0",
+						"flights",
+						"deleteBookmark",
+						"1"
 					]
 				}
 			},

@@ -3,11 +3,15 @@
  */
 package flight.models;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * @author Emanuele Cancelli
@@ -28,6 +32,8 @@ public class Account {
 	private String email;
 	@Column
 	private boolean enabled;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	private Set<Bookmark> bookmarks;
 	/**
 	 * @return the idAccount
 	 */
@@ -101,15 +107,28 @@ public class Account {
 		this.enabled = enabled;
 	}
 	/**
+	 * @return the bookmarks
+	 */
+	public Set<Bookmark> getBookmarks() {
+		return bookmarks;
+	}
+	/**
+	 * @param bookmarks the bookmarks to set
+	 */
+	public void setBookmarks(Set<Bookmark> bookmarks) {
+		this.bookmarks = bookmarks;
+	}
+	/**
 	 * @param idAccount
 	 * @param username
 	 * @param password
 	 * @param confpassword
 	 * @param email
 	 * @param enabled
+	 * @param bookmarks
 	 */
-	public Account(long idAccount, String username, String password, String confpassword, String email,
-			boolean enabled) {
+	public Account(long idAccount, String username, String password, String confpassword, String email, boolean enabled,
+			Set<Bookmark> bookmarks) {
 		super();
 		this.idAccount = idAccount;
 		this.username = username;
@@ -117,6 +136,7 @@ public class Account {
 		this.confpassword = confpassword;
 		this.email = email;
 		this.enabled = enabled;
+		this.bookmarks = bookmarks;
 	}
 	/**
 	 * 

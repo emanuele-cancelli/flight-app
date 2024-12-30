@@ -15,4 +15,5 @@ import flight.models.Account;
 public interface AccountService extends UserDetailsService{
 
 	Account addAccount(AccountDto accountDto);
+	Account findByUsername(String username);
 }

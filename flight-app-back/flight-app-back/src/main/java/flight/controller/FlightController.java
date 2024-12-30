@@ -3,7 +3,9 @@
  */
 package flight.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,15 +37,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import flight.dto.AccountDto;
+import flight.dto.BookmarkDto;
+import flight.dto.BookmarkResponseDto;
 import flight.dto.FlightDto;
 import flight.dto.LogResponseDto;
 import flight.dto.LoginDto;
 import flight.dto.SyntheseCompanyDto;
 import flight.models.Account;
+import flight.models.Bookmark;
 import flight.models.Flight;
 import flight.models.FlightCriteria;
 import flight.models.SynthesisCriteria;
 import flight.service.AccountService;
+import flight.service.BookmarkService;
 import flight.service.FlightService;
 import flight.util.JwtTokenUtil;
 
@@ -61,6 +69,9 @@ public class FlightController {
 	
 	@Autowired
 	AuthenticationManager authenticationManager;
+
+	@Autowired
+	BookmarkService bookmarkService;
 	
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
@@ -73,7 +84,14 @@ public class FlightController {
 		protected void configure() {
 			map().setCompanyName(source.getCompany().getCompanyName());	
 			map().setCabinDetails(source.getCompany().getCabinDetails());	
-			map().setInflightInfo(source.getCompany().getInflightInfo());			
+			map().setInflightInfo(source.getCompany().getInflightInfo());
+		}	
+	};
+	
+	PropertyMap<Bookmark, BookmarkResponseDto> bookmarkFieldMapping = new PropertyMap<Bookmark, BookmarkResponseDto>() {
+		@Override
+		protected void configure() {
+			map().getAccount().setBookmarks(new HashSet<Bookmark>());
 		}	
 	};
 	
@@ -82,6 +100,7 @@ public class FlightController {
 	public FlightController(ModelMapper modelMapper) {
 		this.modelMapper = modelMapper;
 		this.modelMapper.addMappings(companyFieldMapping);
+		this.modelMapper.addMappings(bookmarkFieldMapping);
 	}
 	
 	@PostMapping("/addFlight")
@@ -107,10 +126,14 @@ public class FlightController {
 	}
 	
 	@GetMapping("/getFlight/{id}")
-	public ResponseEntity<FlightDto> getFlight(@PathVariable(value = "id") Long idFlight) {
+	public ResponseEntity<?> getFlight(@PathVariable(value = "id") Long idFlight) {
 		Flight flight = flightService.getFlight(idFlight);
-		FlightDto flightDto = modelMapper.map(flight, FlightDto.class); 
-		return new ResponseEntity<FlightDto>(flightDto, new HttpHeaders(), HttpStatus.OK);
+		if(flight == null) {
+			return new ResponseEntity<String>("Flight number " + idFlight + " doesn't exist", HttpStatus.NOT_FOUND);
+		} else {
+			FlightDto flightDto = modelMapper.map(flight, FlightDto.class); 
+			return new ResponseEntity<FlightDto>(flightDto, new HttpHeaders(), HttpStatus.OK);
+		}
 	}
 	
 	@PostMapping("/numberFlights")
@@ -142,6 +165,33 @@ public class FlightController {
 		UserDetails userDetails = accountService.loadUserByUsername(loginDto.getUsername());
 		String jwt = jwtTokenUtil.generateJwt(userDetails);
 		return new ResponseEntity<LogResponseDto>(new LogResponseDto(jwt), new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/bookmarks")
+	public ResponseEntity<List<BookmarkResponseDto>> getBookmarkList(Principal principal){
+		List<BookmarkResponseDto> bookmarks = bookmarkService.getBookmarkList(principal.getName()).stream()
+				.map(bookmark -> modelMapper.map(bookmark, BookmarkResponseDto.class))
+				.collect(Collectors.toList());;
+		return new ResponseEntity<List<BookmarkResponseDto>>(bookmarks, new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	@PostMapping("/addBookmark")
+	public ResponseEntity<BookmarkResponseDto> addBookmark(@RequestBody BookmarkDto bookmarkDto, Principal principal) {
+		Account account = accountService.findByUsername(principal.getName());
+		Bookmark bookmark = modelMapper.map(bookmarkDto, Bookmark.class);
+		bookmark.setAccount(account);
+		BookmarkResponseDto addedBookmark = modelMapper.map(bookmarkService.addBookmark(bookmark), BookmarkResponseDto.class);
+		return new ResponseEntity<BookmarkResponseDto>(addedBookmark, new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/deleteBookmark/{id}")
+	public ResponseEntity<String> addBookmark(@PathVariable(value = "id") Long idBookmark) {
+		try {
+			bookmarkService.deleteBookmark(idBookmark);
+			return new ResponseEntity<String>("Bookmark number " + idBookmark + " successfully deleted", HttpStatus.OK);
+		} catch (EmptyResultDataAccessException e) {
+			return new ResponseEntity<String>("Bookmark number " + idBookmark + " doesn't exist", HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
