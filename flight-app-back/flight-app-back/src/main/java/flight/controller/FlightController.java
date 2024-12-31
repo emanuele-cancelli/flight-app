@@ -7,6 +7,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,8 @@ import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -76,6 +79,9 @@ public class FlightController {
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
 	
+	@Autowired
+	private MessageSource messages;
+	
 	ModelMapper modelMapper;
 	
 	// added to modelMapper in the constructor
@@ -127,9 +133,10 @@ public class FlightController {
 	
 	@GetMapping("/getFlight/{id}")
 	public ResponseEntity<?> getFlight(@PathVariable(value = "id") Long idFlight) {
+		Locale currentLocale = LocaleContextHolder.getLocale();
 		Flight flight = flightService.getFlight(idFlight);
 		if(flight == null) {
-			return new ResponseEntity<String>("Flight number " + idFlight + " doesn't exist", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(messages.getMessage("getflight.exist.message", new Object[]{idFlight}, currentLocale), HttpStatus.NOT_FOUND);
 		} else {
 			FlightDto flightDto = modelMapper.map(flight, FlightDto.class); 
 			return new ResponseEntity<FlightDto>(flightDto, new HttpHeaders(), HttpStatus.OK);
@@ -156,11 +163,12 @@ public class FlightController {
 	
 	@PostMapping("/authenticate")
 	public ResponseEntity<LogResponseDto> authenticate(@RequestBody LoginDto loginDto) throws Exception {
+		Locale currentLocale = LocaleContextHolder.getLocale();
 		try {
 			// authenticate method calls loadUserByUsername and checks password with the one returned in userDetails
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
 		} catch (BadCredentialsException e) {
-			throw new Exception("Incorrect username or password", e);
+			throw new Exception(messages.getMessage("authenticate.badcredentials.message", null, currentLocale), e);
 		}
 		UserDetails userDetails = accountService.loadUserByUsername(loginDto.getUsername());
 		String jwt = jwtTokenUtil.generateJwt(userDetails);
@@ -185,12 +193,13 @@ public class FlightController {
 	}
 	
 	@DeleteMapping("/deleteBookmark/{id}")
-	public ResponseEntity<String> addBookmark(@PathVariable(value = "id") Long idBookmark) {
+	public ResponseEntity<String> deleteBookmark(@PathVariable(value = "id") Long idBookmark) {
+		Locale currentLocale = LocaleContextHolder.getLocale();
 		try {
 			bookmarkService.deleteBookmark(idBookmark);
-			return new ResponseEntity<String>("Bookmark number " + idBookmark + " successfully deleted", HttpStatus.OK);
+			return new ResponseEntity<String>(messages.getMessage("bookmark.del.message", new Object[]{idBookmark}, currentLocale), HttpStatus.OK);
 		} catch (EmptyResultDataAccessException e) {
-			return new ResponseEntity<String>("Bookmark number " + idBookmark + " doesn't exist", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(messages.getMessage("bookmark.exist.message", new Object[]{idBookmark}, currentLocale), HttpStatus.NOT_FOUND);
 		}
 	}
 	

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9502cffd-38b3-4706-9beb-9b99c393de33",
+		"_postman_id": "d14cd156-dee4-4d91-9b1a-fb359577ad74",
 		"name": "flights",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -105,7 +105,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJFbWFudWVsZTMiLCJleHAiOjE3MzU1ODQzMDQsImlhdCI6MTczNTU2NjMwNH0.R1Tqmuvi7WPYCM-LGt3A0Fn3-n2u7AEy57cRXct7O-KIcV2zY4wE_qVhZ00VcauTfFUmnMdAP1z5AsBXTzMLMw",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJFbWFudWVsZTMiLCJleHAiOjE3MzU2Njk3NDUsImlhdCI6MTczNTY1MTc0NX0.bDzt_p_DKHsZ8p-Y7sTHJP8W7rjm_JNaUBTqwE7KEOKGReY_toXpfr2rdmpsqbI8F1EVGhk8YMY1kufLBAF0Tg",
 						"type": "text"
 					}
 				],
@@ -239,7 +239,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{protocol}}://{{host}}:{{port}}/{{context}}/api/v1.0/flights/authenticate",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{context}}/api/v1.0/flights/authenticate?lang=it",
 					"protocol": "{{protocol}}",
 					"host": [
 						"{{host}}"
@@ -251,6 +251,12 @@
 						"v1.0",
 						"flights",
 						"authenticate"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "it"
+						}
 					]
 				}
 			},
@@ -342,12 +348,12 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJFbWFudWVsZTMiLCJleHAiOjE3MzU1ODQzMDQsImlhdCI6MTczNTU2NjMwNH0.R1Tqmuvi7WPYCM-LGt3A0Fn3-n2u7AEy57cRXct7O-KIcV2zY4wE_qVhZ00VcauTfFUmnMdAP1z5AsBXTzMLMw",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJFbWFudWVsZTMiLCJleHAiOjE3MzU2Njk2ODQsImlhdCI6MTczNTY1MTY4NH0.y4tAh__bg3fM8s-QpHXGH7ferCbeL9YXyePO9rAFpyetLljKBcP9SavF8f07X1M42yP4wTzlkAy2b68aaAorRw",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "{{protocol}}://{{host}}:{{port}}/{{context}}/api/v1.0/flights/deleteBookmark/1",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{context}}/api/v1.0/flights/deleteBookmark/21?lang=en",
 					"protocol": "{{protocol}}",
 					"host": [
 						"{{host}}"
@@ -359,11 +365,18 @@
 						"v1.0",
 						"flights",
 						"deleteBookmark",
-						"1"
+						"21"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "en"
+						}
 					]
 				}
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
